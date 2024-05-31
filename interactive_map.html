@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Map</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #map {
+            position: relative;
+            width: 800px;  /* Adjust to your image width */
+            height: 800px; /* Adjust to your image height */
+            background: url('image_with_grid.png') no-repeat center center;
+            background-size: contain;
+            margin: auto;
+        }
+        #coords {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 5px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map">
+        <div id="coords">Coords: (0, 0)</div>
+    </div>
+
+    <script>
+        const map = document.getElementById('map');
+        const coordsDisplay = document.getElementById('coords');
+
+        map.addEventListener('mousemove', function(event) {
+            const rect = map.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            const mapWidth = rect.width;
+            const mapHeight = rect.height;
+            const mapRealSize = 20480; // The size of the map in meters
+
+            const coordX = (x / mapWidth) * mapRealSize;
+            const coordY = (y / mapHeight) * mapRealSize;
+
+            coordsDisplay.textContent = `Coords: (${coordX.toFixed(2)}, ${coordY.toFixed(2)})`;
+        });
+    </script>
+</body>
+</html>
